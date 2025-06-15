@@ -27,7 +27,7 @@ export class UrlService {
   }
 
   async deleteExpiredUrls(): Promise<void> {
-    const now = new Date()
+    const now = new Date(Date.now())
     const result = await this.collection.deleteMany({
       expiresAt: { $lt: now },
     })
