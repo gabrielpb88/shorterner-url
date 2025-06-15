@@ -23,4 +23,4 @@ function getPackageInfo(): VersionInfo {
   }
 }
 
-export const versionInfo = getPackageInfo() 
+export const versionInfo = getPackageInfo()

@@ -8,4 +8,4 @@ export function createVersionRoutes(): Router {
   router.get('/', versionController.getVersion)
 
   return router
-} 
+}
