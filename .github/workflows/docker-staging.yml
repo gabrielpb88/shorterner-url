@@ -43,8 +43,5 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Deploy to Render
-        uses: render/deploy-action@v1
-        with:
-          apiKey: ${{ secrets.RENDER_STAGING_API_KEY }}
-          serviceId: ${{ secrets.RENDER_STAGING_SERVICE_ID }}
-          environment: staging
+        run:
+          curl ${{ secrets.RENDER_STAGING_URL }}

@@ -23,7 +23,6 @@ COPY --from=build /app/dist ./dist
 COPY --from=build /app/src/public ./dist/public
 
 ENV NODE_ENV=production
-ENV BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 
 EXPOSE 80
 

@@ -5,8 +5,6 @@ interface VersionInfo {
   version: string
   name: string
   description: string
-  buildDate: string
-  commitHash?: string
 }
 
 function getPackageInfo(): VersionInfo {
@@ -17,10 +15,8 @@ function getPackageInfo(): VersionInfo {
   return {
     version: packageJson.version,
     name: packageJson.name,
-    description: packageJson.description,
-    buildDate: process.env.BUILD_DATE,
-    commitHash: process.env.COMMIT_HASH
+    description: packageJson.description
   }
 }
 
-export const versionInfo = getPackageInfo() 
+export const versionInfo = getPackageInfo()
