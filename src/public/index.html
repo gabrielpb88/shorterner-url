@@ -131,7 +131,7 @@
             const errorDiv = document.getElementById('error');
 
             try {
-                const response = await fetch('/', {
+                const response = await fetch('/api', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -144,7 +144,7 @@
                 }
 
                 const data = await response.json();
-                const shortUrl = window.location.origin + '/' + data.shortUrl;
+                const shortUrl = window.location.origin + '/api/' + data.shortUrl;
                 
                 shortUrlElement.href = shortUrl;
                 shortUrlElement.textContent = shortUrl;

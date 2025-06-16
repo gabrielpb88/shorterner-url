@@ -29,7 +29,7 @@ async function main(): Promise<void> {
   })
 
   app.use('/version', createVersionRoutes())
-  app.use('/', createUrlRoutes(urlService))
+  app.use('/api', createUrlRoutes(urlService))
 
   const { PORT = 80 } = process.env
   app.listen(PORT, () => {
