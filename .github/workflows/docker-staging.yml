@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -23,9 +25,10 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Get Git SHA
+      - name: Get latest tag
         id: vars
-        run: echo "sha_short=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run:
+          echo "tag=$(git describe --tags --abbrev=0)" >> $GITHUB_OUTPUT
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v6
@@ -33,4 +36,12 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: gabrielpb88/shorterner-url:staging-${{ steps.vars.outputs.sha_short }}
+          tags: |
+            gabrielpb88/url-shortner:staging-${{ steps.vars.outputs.tag }}
+            gabrielpb88/url-shortner:staging
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Deploy to Render
+        run:
+          curl ${{ secrets.RENDER_STAGING_URL }}
