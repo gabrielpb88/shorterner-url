@@ -5,11 +5,14 @@ import { connectToMongo } from './db/mongo'
 import { UrlService } from './services/url.service'
 import { deleteUrlsJob } from './cron/delete-expired-urls'
 import { createUrlRoutes } from './routes/url.routes'
+import { createVersionRoutes } from './routes/version.routes'
 import { logger } from './logger'
+import path from 'path'
 
 async function main(): Promise<void> {
   const app = express()
   app.use(json())
+  app.use(express.static(path.join(__dirname, 'public')))
 
   const { db, urlsCollection } = await connectToMongo()
   const urlService = new UrlService(urlsCollection)
@@ -24,6 +27,8 @@ async function main(): Promise<void> {
       res.status(500).json({ status: 'error', error: (err as Error).message })
     }
   })
+
+  app.use('/version', createVersionRoutes())
   app.use('/', createUrlRoutes(urlService))
 
   const { PORT = 80 } = process.env

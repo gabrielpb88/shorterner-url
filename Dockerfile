@@ -20,6 +20,7 @@ ENV NODE_ENV=production
 RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/src/public ./dist/public
 
 ENV NODE_ENV=production
 
