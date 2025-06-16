@@ -7,6 +7,8 @@ RUN npm install
 
 COPY . .
 
-EXPOSE 3000
+ENV BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+
+EXPOSE 80
 
 CMD ["npm", "run", "start:dev"]

@@ -78,15 +78,19 @@ describe('getOriginalUrl', () => {
 
   describe('deleteExpiredUrls', () => {
     it('should delete all expired URLs', async () => {
-      const now = new Date()
+      const fakeNow = new Date('2025-01-01T00:00:00Z')
+      jest.spyOn(global.Date, 'now').mockImplementation(() => fakeNow.getTime())
+
       collectionMock.deleteMany.mockResolvedValue({
         acknowledged: true,
         deletedCount: 1,
       })
       await service.deleteExpiredUrls()
       expect(collectionMock.deleteMany).toHaveBeenCalledWith({
-        expiresAt: { $lt: now },
+        expiresAt: { $lt: fakeNow },
       })
+
+      jest.spyOn(global.Date, 'now').mockRestore()
     })
   })
 })

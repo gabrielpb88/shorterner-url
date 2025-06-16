@@ -20,9 +20,11 @@ ENV NODE_ENV=production
 RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/src/public ./dist/public
 
 ENV NODE_ENV=production
+ENV BUILD_DATE="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
 
-EXPOSE 3000
+EXPOSE 80
 
 CMD ["npm", "run", "start"]
