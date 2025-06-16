@@ -9,7 +9,7 @@ interface VersionInfo {
 
 function getPackageInfo(): VersionInfo {
   const packageJson = JSON.parse(
-    readFileSync(join(__dirname, '../../package.json'), 'utf-8')
+    readFileSync(join(__dirname, process.env.NODE_ENV === 'production' ? '../../package.json' : '../package.json'), 'utf-8')
   )
 
   return {
